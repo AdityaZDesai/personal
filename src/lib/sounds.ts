@@ -1,7 +1,6 @@
 let audioCtx: AudioContext | null = null;
 let masterGain: GainNode | null = null;
-let ambientNodes: OscillatorNode[] = [];
-let ambientGains: GainNode[] = [];
+let ambientAudio: HTMLAudioElement | null = null;
 let ambientRunning = false;
 let muted = false;
 
@@ -105,80 +104,46 @@ export function playError() {
 }
 
 export function startAmbient() {
-  if (!audioCtx || !masterGain || ambientRunning) return;
+  if (ambientRunning) return;
   ambientRunning = true;
 
-  const now = audioCtx.currentTime;
-
-  const layers: { freq: number; type: OscillatorType; vol: number; lfoRate: number; lfoDepth: number; filterFreq: number }[] = [
-    { freq: 220, type: "sine", vol: 0.06, lfoRate: 0.08, lfoDepth: 3, filterFreq: 800 },
-    { freq: 330, type: "triangle", vol: 0.03, lfoRate: 0.05, lfoDepth: 2, filterFreq: 600 },
-    { freq: 440, type: "sine", vol: 0.02, lfoRate: 0.03, lfoDepth: 4, filterFreq: 700 },
-    { freq: 165, type: "triangle", vol: 0.04, lfoRate: 0.06, lfoDepth: 2, filterFreq: 500 },
-  ];
-
-  layers.forEach((layer) => {
-    const osc = audioCtx!.createOscillator();
-    osc.type = layer.type;
-    osc.frequency.value = layer.freq;
-
-    const lfo = audioCtx!.createOscillator();
-    lfo.type = "sine";
-    lfo.frequency.value = layer.lfoRate;
-
-    const lfoGain = audioCtx!.createGain();
-    lfoGain.gain.value = layer.lfoDepth;
-
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
-
-    const filter = audioCtx!.createBiquadFilter();
-    filter.type = "lowpass";
-    filter.frequency.value = layer.filterFreq;
-    filter.Q.value = 0.7;
-
-    const gain = audioCtx!.createGain();
-    gain.gain.setValueAtTime(0, now);
-    gain.gain.linearRampToValueAtTime(layer.vol, now + 4);
-
-    osc.connect(filter);
-    filter.connect(gain);
-    gain.connect(masterGain!);
-
-    osc.start();
-    lfo.start();
-
-    ambientNodes.push(osc, lfo);
-    ambientGains.push(gain);
+  ambientAudio = new Audio("/lofi-ambient.mp3");
+  ambientAudio.loop = true;
+  ambientAudio.volume = muted ? 0 : 0.35;
+  ambientAudio.play().catch(() => {
+    ambientRunning = false;
   });
 }
 
 export function stopAmbient() {
-  if (!audioCtx || !ambientRunning) return;
+  if (!ambientAudio) return;
   ambientRunning = false;
 
-  const now = audioCtx.currentTime;
-  ambientGains.forEach((gain) => {
-    gain.gain.linearRampToValueAtTime(0, now + 1);
-  });
+  const audio = ambientAudio;
+  const startVol = audio.volume;
+  const fadeSteps = 20;
+  const fadeInterval = 50;
+  let step = 0;
 
-  setTimeout(() => {
-    ambientNodes.forEach((node) => {
-      try {
-        node.stop();
-      } catch {
-        /* already stopped */
-      }
-    });
-    ambientNodes = [];
-    ambientGains = [];
-  }, 1200);
+  const fade = setInterval(() => {
+    step++;
+    audio.volume = Math.max(0, startVol * (1 - step / fadeSteps));
+    if (step >= fadeSteps) {
+      clearInterval(fade);
+      audio.pause();
+      audio.currentTime = 0;
+      ambientAudio = null;
+    }
+  }, fadeInterval);
 }
 
 export function setMuted(value: boolean) {
   muted = value;
   if (masterGain) {
     masterGain.gain.value = muted ? 0 : 1;
+  }
+  if (ambientAudio) {
+    ambientAudio.volume = muted ? 0 : 0.35;
   }
   try {
     localStorage.setItem("terminal-muted", String(muted));

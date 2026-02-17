@@ -103,6 +103,16 @@ body {
   animation: bannerGlow 3s ease-in-out infinite;
 }
 
+/* ── ASCII banner (hide scrollbar but allow overflow as fallback) ── */
+
+.ascii-banner {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.ascii-banner::-webkit-scrollbar {
+  display: none;
+}
+
 /* ── Output block card ──────────────────────────── */
 
 .output-block {

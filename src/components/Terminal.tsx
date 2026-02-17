@@ -30,33 +30,34 @@ interface HistoryEntry {
   isBlock?: boolean;
 }
 
-const ASCII_BANNER: OutputLineType[] = [
-  { text: "" },
-  { text: "" },
+const ASCII_ART_LINES = [
   {
-    text: " \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2557   \u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2557",
-    className: "text-gradient-1 animate-banner-glow",
+    text: " \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2557   \u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2557 ",
+    className: "text-gradient-1",
   },
   {
     text: "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551\u255a\u2550\u2550\u2588\u2588\u2554\u2550\u2550\u255d\u255a\u2588\u2588\u2557 \u2588\u2588\u2554\u255d\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557",
-    className: "text-gradient-2 animate-banner-glow",
+    className: "text-gradient-2",
   },
   {
     text: "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551    \u255a\u2588\u2588\u2588\u2588\u2554\u255d \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551",
-    className: "text-gradient-3 animate-banner-glow",
+    className: "text-gradient-3",
   },
   {
     text: "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551     \u255a\u2588\u2588\u2554\u255d  \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551",
-    className: "text-gradient-4 animate-banner-glow",
+    className: "text-gradient-4",
   },
   {
     text: "\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2551   \u2588\u2588\u2551      \u2588\u2588\u2551   \u2588\u2588\u2551  \u2588\u2588\u2551",
-    className: "text-gradient-5 animate-banner-glow",
+    className: "text-gradient-5",
   },
   {
     text: "\u255a\u2550\u255d  \u255a\u2550\u255d\u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u255d   \u255a\u2550\u255d      \u255a\u2550\u255d   \u255a\u2550\u255d  \u255a\u2550\u255d",
-    className: "text-gradient-6 animate-banner-glow",
+    className: "text-gradient-6",
   },
+];
+
+const WELCOME_LINES: OutputLineType[] = [
   { text: "" },
   { text: "" },
   {
@@ -82,7 +83,6 @@ const ASCII_BANNER: OutputLineType[] = [
 
 export default function Terminal() {
   const [history, setHistory] = useState<HistoryEntry[]>([]);
-  const [bannerLines] = useState<OutputLineType[]>(ASCII_BANNER);
   const [currentInput, setCurrentInput] = useState("");
   const [cwd, setCwd] = useState("~");
   const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -321,9 +321,18 @@ export default function Terminal() {
         >
           {/* Banner */}
           <div className="animate-fade-in">
-            {bannerLines.map((line, i) => (
+            {/* ASCII art rendered with tight line-height so box-drawing chars connect */}
+            <div className="ascii-banner mt-6 mb-6 sm:mt-8 sm:mb-8 overflow-x-auto font-mono whitespace-pre text-[9px] min-[400px]:text-xs sm:text-sm leading-none animate-banner-glow">
+              {ASCII_ART_LINES.map((line, i) => (
+                <div key={`art-${i}`} className={line.className}>
+                  {line.text}
+                </div>
+              ))}
+            </div>
+            {/* Welcome text */}
+            {WELCOME_LINES.map((line, i) => (
               <OutputLine
-                key={`banner-${i}`}
+                key={`welcome-${i}`}
                 text={line.text}
                 className={line.className}
               />
