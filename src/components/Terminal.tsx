@@ -32,28 +32,32 @@ interface HistoryEntry {
 
 const ASCII_ART_LINES = [
   {
-    text: " \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557",
+    text: " █████╗   ██████╗   ██╗",
     className: "text-gradient-1",
   },
   {
-    text: "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551",
+    text: "██╔══██╗  ██╔══██╗  ██║",
     className: "text-gradient-2",
   },
   {
-    text: "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551",
+    text: "██║  ██║  ██║  ██║  ██║",
     className: "text-gradient-3",
   },
   {
-    text: "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551",
+    text: "███████║  ██║  ██║  ██║",
     className: "text-gradient-4",
   },
   {
-    text: "\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2551",
+    text: "██║  ██║  ██║  ██║  ██║",
     className: "text-gradient-5",
   },
   {
-    text: "\u255a\u2550\u255d  \u255a\u2550\u255d\u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u255d",
+    text: "██║  ██║  ██████╔╝  ██║",
     className: "text-gradient-6",
+  },
+  {
+    text: "╚═╝  ╚═╝  ╚═════╝   ╚═╝",
+    className: "text-gradient-7",
   },
 ];
 
@@ -122,7 +126,9 @@ export default function Terminal() {
   }, []);
 
   useEffect(() => {
-    scrollToBottom();
+    if (history.length > 0) {
+      scrollToBottom();
+    }
   }, [history, scrollToBottom]);
 
   useEffect(() => {
@@ -320,9 +326,9 @@ export default function Terminal() {
           className="flex-1 overflow-y-auto scroll-smooth px-3 py-4 sm:px-8 sm:py-8 pb-4 font-mono text-xs sm:text-sm"
         >
           {/* Banner */}
-          <div className="animate-fade-in pt-6 pl-1 sm:pt-16 sm:pl-8">
+          <div className="animate-fade-in pt-2 pl-1 sm:pt-16 sm:pl-8">
             {/* ASCII art rendered with tight line-height so box-drawing chars connect */}
-            <div className="ascii-banner mb-6 sm:mb-10 overflow-x-auto font-mono whitespace-pre text-[10px] sm:text-base md:text-lg leading-[0.75] tracking-[-0.1em] animate-banner-glow">
+            <div className="ascii-banner mb-6 sm:mb-10 overflow-x-auto font-mono whitespace-pre text-sm sm:text-lg md:text-xl leading-[0.75] tracking-[-0.1em] animate-banner-glow">
               {ASCII_ART_LINES.map((line, i) => (
                 <div key={`art-${i}`} className={line.className}>
                   {line.text}
