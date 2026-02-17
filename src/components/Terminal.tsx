@@ -32,27 +32,27 @@ interface HistoryEntry {
 
 const ASCII_ART_LINES = [
   {
-    text: " \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2557\u2588\u2588\u2557   \u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2557 ",
+    text: " \u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2588\u2588\u2588\u2588\u2557 \u2588\u2588\u2557",
     className: "text-gradient-1",
   },
   {
-    text: "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551\u255a\u2550\u2550\u2588\u2588\u2554\u2550\u2550\u255d\u255a\u2588\u2588\u2557 \u2588\u2588\u2554\u255d\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557",
+    text: "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2557\u2588\u2588\u2551",
     className: "text-gradient-2",
   },
   {
-    text: "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551    \u255a\u2588\u2588\u2588\u2588\u2554\u255d \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551",
+    text: "\u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551",
     className: "text-gradient-3",
   },
   {
-    text: "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551   \u2588\u2588\u2551     \u255a\u2588\u2588\u2554\u255d  \u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551",
+    text: "\u2588\u2588\u2554\u2550\u2550\u2588\u2588\u2551\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2551",
     className: "text-gradient-4",
   },
   {
-    text: "\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2551   \u2588\u2588\u2551      \u2588\u2588\u2551   \u2588\u2588\u2551  \u2588\u2588\u2551",
+    text: "\u2588\u2588\u2551  \u2588\u2588\u2551\u2588\u2588\u2588\u2588\u2588\u2588\u2554\u255d\u2588\u2588\u2551",
     className: "text-gradient-5",
   },
   {
-    text: "\u255a\u2550\u255d  \u255a\u2550\u255d\u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u255d   \u255a\u2550\u255d      \u255a\u2550\u255d   \u255a\u2550\u255d  \u255a\u2550\u255d",
+    text: "\u255a\u2550\u255d  \u255a\u2550\u255d\u255a\u2550\u2550\u2550\u2550\u2550\u255d \u255a\u2550\u255d",
     className: "text-gradient-6",
   },
 ];
@@ -61,20 +61,20 @@ const WELCOME_LINES: OutputLineType[] = [
   { text: "" },
   { text: "" },
   {
-    text: "   Welcome to my interactive terminal portfolio.",
+    text: "Welcome to my interactive terminal portfolio.",
     className: "text-terminal-green",
   },
   {
-    text: "   Explore my work, experience, and more with Unix commands.",
+    text: "Explore my work, experience, and more with Unix commands.",
     className: "text-terminal-gray",
   },
   { text: "" },
   {
-    text: "   Type 'help' to see available commands.",
+    text: "Type 'help' to see available commands.",
     className: "text-terminal-gray",
   },
   {
-    text: "   Type 'ls' to start exploring.",
+    text: "Type 'ls' to start exploring.",
     className: "text-terminal-gray",
   },
   { text: "" },
@@ -294,14 +294,14 @@ export default function Terminal() {
       {/* Terminal container */}
       <div className="flex h-full w-full flex-col overflow-hidden rounded-none border-0 border-[#262626] bg-[#141414] sm:h-[calc(100vh-32px)] sm:max-w-[1200px] sm:rounded-xl sm:border">
         {/* Title bar */}
-        <div className="flex h-10 flex-shrink-0 items-center justify-between border-b border-[#262626] bg-[#0d0d0d] px-5 sm:rounded-t-xl">
-          <div className="flex items-center">
-            <div className="mr-4 flex gap-2">
-              <div className="h-3 w-3 rounded-full bg-[#e5534b] transition-opacity hover:opacity-80" />
-              <div className="h-3 w-3 rounded-full bg-[#e5a855] transition-opacity hover:opacity-80" />
-              <div className="h-3 w-3 rounded-full bg-[#7dce82] transition-opacity hover:opacity-80" />
+        <div className="flex h-9 sm:h-10 flex-shrink-0 items-center justify-between border-b border-[#262626] bg-[#0d0d0d] px-3 sm:px-5 sm:rounded-t-xl">
+          <div className="flex items-center min-w-0">
+            <div className="mr-3 sm:mr-4 flex gap-1.5 sm:gap-2 shrink-0">
+              <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#e5534b] transition-opacity hover:opacity-80" />
+              <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#e5a855] transition-opacity hover:opacity-80" />
+              <div className="h-2.5 w-2.5 sm:h-3 sm:w-3 rounded-full bg-[#7dce82] transition-opacity hover:opacity-80" />
             </div>
-            <span className="text-xs text-terminal-gray tracking-wide">
+            <span className="text-[10px] sm:text-xs text-terminal-gray tracking-wide truncate">
               visitor@aditya: {cwd}
             </span>
           </div>
@@ -317,12 +317,12 @@ export default function Terminal() {
         {/* Scrollable output area */}
         <div
           ref={terminalRef}
-          className="flex-1 overflow-y-auto scroll-smooth px-6 py-6 sm:px-8 sm:py-8 pb-4 font-mono text-sm"
+          className="flex-1 overflow-y-auto scroll-smooth px-3 py-4 sm:px-8 sm:py-8 pb-4 font-mono text-xs sm:text-sm"
         >
           {/* Banner */}
-          <div className="animate-fade-in">
+          <div className="animate-fade-in pt-6 pl-1 sm:pt-16 sm:pl-8">
             {/* ASCII art rendered with tight line-height so box-drawing chars connect */}
-            <div className="ascii-banner mt-6 mb-6 sm:mt-8 sm:mb-8 overflow-x-auto font-mono whitespace-pre text-[9px] min-[400px]:text-xs sm:text-sm leading-none animate-banner-glow">
+            <div className="ascii-banner mb-6 sm:mb-10 overflow-x-auto font-mono whitespace-pre text-[10px] sm:text-base md:text-lg leading-[0.75] tracking-[-0.1em] animate-banner-glow">
               {ASCII_ART_LINES.map((line, i) => (
                 <div key={`art-${i}`} className={line.className}>
                   {line.text}
@@ -370,16 +370,16 @@ export default function Terminal() {
         </div>
 
         {/* Fixed bottom input bar */}
-        <div className="animate-slide-up flex-shrink-0 border-t border-[#262626] bg-[#0d0d0d] px-5 py-3 sm:rounded-b-xl sm:px-6">
-          <div className="flex items-center gap-3 rounded-lg bg-[#141414] px-4 py-2.5 ring-1 ring-[#262626] transition-all duration-200 focus-within:ring-[#da7756]/50">
-            <span className="text-terminal-orange font-bold text-base select-none">
+        <div className="animate-slide-up flex-shrink-0 border-t border-[#262626] bg-[#0d0d0d] px-3 py-2 sm:rounded-b-xl sm:px-6 sm:py-3">
+          <div className="flex items-center gap-2 sm:gap-3 rounded-lg bg-[#141414] px-3 py-2 sm:px-4 sm:py-2.5 ring-1 ring-[#262626] transition-all duration-200 focus-within:ring-[#da7756]/50">
+            <span className="text-terminal-orange font-bold text-sm sm:text-base select-none">
               &gt;
             </span>
-            <div className="relative flex-1">
-              <span className="text-terminal-white text-sm leading-7">
+            <div className="relative flex-1 min-w-0">
+              <span className="text-terminal-white text-xs sm:text-sm leading-7 break-all">
                 {currentInput}
               </span>
-              <span className="cursor-blink ml-[1px] inline-block h-[18px] w-[8px] translate-y-[3px] bg-[#e2e8f0]" />
+              <span className="cursor-blink ml-[1px] inline-block h-[14px] sm:h-[18px] w-[6px] sm:w-[8px] translate-y-[3px] bg-[#e2e8f0]" />
               <input
                 ref={inputRef}
                 type="text"
@@ -400,8 +400,8 @@ export default function Terminal() {
         </div>
 
         {/* Mobile hint */}
-        <div className="flex-shrink-0 bg-[#0d0d0d] px-5 py-2 text-xs text-terminal-gray sm:hidden">
-          Tap anywhere to type. Best viewed on desktop.
+        <div className="flex-shrink-0 bg-[#0d0d0d] px-3 py-1.5 text-[10px] text-terminal-gray sm:hidden">
+          Tap anywhere to type
         </div>
       </div>
     </div>

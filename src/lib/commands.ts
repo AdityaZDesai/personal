@@ -39,28 +39,28 @@ const commands: Record<string, CommandHandler> = {
 function handleHelp(): CommandResult {
   const output: OutputLine[] = [
     { text: "" },
-    { text: "  Available Commands:", className: "text-terminal-green font-bold" },
+    { text: " Available Commands:", className: "text-terminal-green font-bold" },
     { text: "" },
-    { text: "    help              Show this help message" },
-    { text: "    ls [dir]          List directory contents" },
-    { text: "    cd <dir>          Change directory" },
-    { text: "    cat <file>        Display file contents" },
-    { text: "    pwd               Print working directory" },
-    { text: "    tree [dir]        Show directory tree" },
-    { text: "    whoami            About the visitor" },
-    { text: "    open <name>       Open a link (github, linkedin, email, twitter, website)" },
-    { text: "    history           Show command history" },
-    { text: "    clear             Clear the terminal" },
-    { text: "    echo <text>       Print text" },
+    { text: "  help         Show this help message" },
+    { text: "  ls [dir]     List directory contents" },
+    { text: "  cd <dir>     Change directory" },
+    { text: "  cat <file>   Display file contents" },
+    { text: "  pwd          Print working directory" },
+    { text: "  tree [dir]   Show directory tree" },
+    { text: "  whoami       About the visitor" },
+    { text: "  open <name>  Open a link (github, linkedin, etc.)" },
+    { text: "  history      Show command history" },
+    { text: "  clear        Clear the terminal" },
+    { text: "  echo <text>  Print text" },
     { text: "" },
-    { text: "  Navigation Tips:", className: "text-terminal-yellow font-bold" },
+    { text: " Navigation Tips:", className: "text-terminal-yellow font-bold" },
     { text: "" },
-    { text: "    Tab               Auto-complete file/directory names" },
-    { text: "    Up/Down           Navigate command history" },
-    { text: "    cd ..             Go up one directory" },
-    { text: "    cd ~              Go to home directory" },
+    { text: "  Tab          Auto-complete names" },
+    { text: "  Up/Down      Navigate command history" },
+    { text: "  cd ..        Go up one directory" },
+    { text: "  cd ~         Go to home directory" },
     { text: "" },
-    { text: "  Try: ls, then cd projects, then cat terminal-portfolio.txt", className: "text-terminal-gray" },
+    { text: " Try: ls, then cd projects, then cat terminal-portfolio.txt", className: "text-terminal-gray" },
     { text: "" },
   ];
   return { output, isBlock: true };
@@ -92,8 +92,8 @@ function handleLs(args: string[], cwd: string): CommandResult {
   }
 
   const maxLen = Math.max(...entries.map((e) => e.length));
-  const colWidth = maxLen + 4;
-  const cols = Math.max(1, Math.floor(60 / colWidth));
+  const colWidth = maxLen + 2;
+  const cols = Math.max(1, Math.floor(40 / colWidth));
 
   const output: OutputLine[] = [];
   for (let i = 0; i < entries.length; i += cols) {
