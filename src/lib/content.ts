@@ -189,28 +189,23 @@ export const skillCategories: SkillCategory[] = [
 export const hobbiesText = `
   When I step away from the keyboard:
 
-    Running       I enjoy long-distance running. Training for my next half marathon.
-    Reading       Sci-fi, philosophy, and technical books. Currently reading
-                  "Designing Data-Intensive Applications".
-    Photography   Street photography and landscapes. I shoot on a Fuji X-T4.
-    Gaming        Strategy and indie games. Big fan of Factorio and Celeste.
-    Cooking       Experimenting with recipes from different cuisines.
-                  My specialty is homemade pasta.
-    Music         Playing guitar and discovering new artists. Mostly into
-                  indie rock, jazz, and lo-fi.
+    Boxing        I love to train and watch boxing.
+    Reading       Big into fantasy and sci-fi. Always looking for the next
+                  great series to get lost in.
+    Gaming        Playing games whenever I get the chance.
 `;
 
 export const beliefsText = `
   Things I believe in:
 
-    Build in public       Share your work early and often. Feedback is a gift.
-    Ship fast, iterate    Done is better than perfect. Version 1 is just the start.
-    Stay curious          The best engineers never stop learning.
-    Write it down         Documentation is a love letter to your future self.
-    Simplicity wins       The best code is code you don't have to write.
-    Own your craft        Take pride in quality. Sweat the details.
-    Be kind               Tech is built by people. Treat them well.
-    Open source matters   Give back to the community that gave you so much.
+    AGI by 2030           We're closer than people think. The singularity isn't sci-fi anymore.
+    Engineers should rule  Society would be better off run by builders than politicians.
+    Sleep is a bug         The best work happens when everyone else is asleep.
+    College is a scam      I'm in uni and I learn more in a weekend hackathon than a semester.
+    Meritocracy or death   If your idea can't survive criticism, it deserves to die.
+    AI replaces managers   Middle management is just a slow API. Automate it.
+    Ship at 2am            Your best code is written when you have no business being awake.
+    Comfort is the enemy   Growth only happens when you're uncomfortable and slightly unhinged.
 `;
 
 export const links: Link[] = [
