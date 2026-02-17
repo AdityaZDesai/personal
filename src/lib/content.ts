@@ -29,93 +29,98 @@ export interface Link {
 export const aboutText = `
   Hey, I'm Aditya Desai.
 
-  I'm a software engineer who loves building things that live on the internet.
-  I care deeply about clean code, great user experiences, and shipping products
-  that make a difference.
+  I'm a Computer Science & Business Analytics student at Monash University
+  with a passion for building full-stack products and working with data at scale.
 
-  When I'm not coding, you'll find me exploring new tech, reading, or working
-  on side projects that scratch a creative itch.
+  Currently an Assistant Data Engineer at ENGIE and a Projects Officer at
+  the Monash Association of Coding, where I built a jobs board with 2,200+
+  daily active users.
+
+  I love shipping real products — from AI companions to hackathon-winning
+  fashion apps. Always looking for the next problem to solve.
 
   Feel free to explore this terminal to learn more about me.
   Type 'help' to see what commands are available.
 
   Contact:
-    Email    aditya@example.com
-    GitHub   github.com/adityadesai
+    Email    adityadesai753@gmail.com
+    GitHub   github.com/adityaZdesai
     LinkedIn linkedin.com/in/adityadesai
 `;
 
 export const projects: Project[] = [
   {
-    name: "Terminal Portfolio",
-    slug: "terminal-portfolio",
+    name: "Harmonica",
+    slug: "harmonica",
     description:
-      "This very website! A terminal-style portfolio built with Next.js and TypeScript. Navigate with Unix commands to explore my work and background.",
+      "The best AI companion that actually listens and understands. Chat with her through iMessage, Discord, and Telegram. Features a state-of-the-art memory model (50% better than ChatGPT) and custom fine-tuned image generation.",
+    tech: ["AI/ML", "Fine-tuning", "iMessage", "Discord", "Telegram"],
+    url: "https://loveharmonica.com",
+  },
+  {
+    name: "MAC Jobs Board",
+    slug: "mac-jobs-board",
+    description:
+      "A jobs board built for the Monash Association of Coding community. Reached 1,000 daily active users at its peak, connecting students with tech opportunities.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS"],
-    url: "https://adityadesai.dev",
-    github: "https://github.com/adityadesai/terminal-portfolio",
+    url: "https://jobs.monashcoding.com",
   },
   {
-    name: "CloudSync",
-    slug: "cloudsync",
+    name: "Weave",
+    slug: "weave",
     description:
-      "A real-time file synchronization tool that keeps local and cloud storage in perfect harmony. Features conflict resolution and delta syncing.",
-    tech: ["Go", "gRPC", "AWS S3", "SQLite"],
-    github: "https://github.com/adityadesai/cloudsync",
-  },
-  {
-    name: "DevBoard",
-    slug: "devboard",
-    description:
-      "A developer dashboard that aggregates GitHub activity, CI/CD pipelines, and project metrics into a single unified view.",
-    tech: ["React", "Node.js", "GraphQL", "PostgreSQL"],
-    url: "https://devboard.example.com",
-    github: "https://github.com/adityadesai/devboard",
-  },
-  {
-    name: "Pixel Art Generator",
-    slug: "pixel-art-generator",
-    description:
-      "A web-based pixel art editor with layers, animation support, and export to sprite sheets. Built for game developers and artists.",
-    tech: ["TypeScript", "Canvas API", "Web Workers"],
-    url: "https://pixels.example.com",
+      "An AI-powered fashion app that lets users find and virtually try on clothing. Winner at UNIHACK 2025, the largest student hackathon in Australia.",
+    tech: ["Next.js", "Go", "Python", "AWS", "MongoDB"],
+    github: "https://github.com/jason301c/unihack-2025",
   },
 ];
 
 export const experiences: Experience[] = [
   {
-    company: "Acme Corp",
-    slug: "acme-corp",
-    role: "Senior Software Engineer",
-    dates: "Jan 2024 - Present",
+    company: "ENGIE",
+    slug: "engie-data-engineer",
+    role: "Assistant Data Engineer",
+    dates: "Feb 2025 - Present",
     bullets: [
-      "Led development of a microservices platform serving 2M+ daily requests",
-      "Designed and implemented real-time event processing pipeline using Kafka",
-      "Mentored a team of 4 junior engineers, establishing code review practices",
-      "Reduced API response times by 40% through caching and query optimization",
+      "Using PySpark and AWS Glue to filter and perform Data Quality Checks",
+      "Transforming and populating data within PowerBI Dashboards using SQL",
+      "Building Glue scripts and jobs using AWS CDK and GitHub Actions",
     ],
   },
   {
-    company: "StartupXYZ",
-    slug: "startupxyz",
-    role: "Full Stack Developer",
-    dates: "Jun 2022 - Dec 2023",
+    company: "Monash Association of Coding",
+    slug: "mac",
+    role: "Projects Officer",
+    dates: "Nov 2024 - Present",
     bullets: [
-      "Built the core product from 0 to 1, shipping to first 500 paying customers",
-      "Implemented authentication, billing, and multi-tenant architecture",
-      "Set up CI/CD pipelines and infrastructure-as-code with Terraform",
-      "Worked directly with founders to define product roadmap and priorities",
+      "Built a jobs board using Next.js and Go with over 2,200 daily active users, hosted on Azure App Services",
+      "Used GoLang to scrape over 10,000 job listings from 4 different websites",
+      "Built APIs and backends using SpringBoot and Java",
+      "Created an open source project with 100+ commits, using GitHub Actions for CI/CD auto-deployment",
     ],
   },
   {
-    company: "BigTech Inc",
-    slug: "bigtech-inc",
-    role: "Software Engineering Intern",
-    dates: "May 2021 - Aug 2021",
+    company: "ENGIE",
+    slug: "engie-it-cadet",
+    role: "Information Technology Cadet",
+    dates: "Dec 2023 - Feb 2024, Nov 2024 - Feb 2025",
     bullets: [
-      "Developed internal tooling that automated deployment workflows",
-      "Contributed to open-source libraries used across the organization",
-      "Presented technical findings to a team of 30+ engineers",
+      "Assisted with an enterprise-wide laptop swap for over 400 employees",
+      "Created an internal compliance tool using PowerShell scripting, now used internationally",
+      "Built a PowerBI dashboard using internal APIs that can fetch up to 30,000 tickets",
+      "Worked with Deskside Support and Service Desk teams to resolve internal stakeholder queries",
+    ],
+  },
+  {
+    company: "Monash Deep Neuron",
+    slug: "monash-deep-neuron",
+    role: "Optimised Computing Team Member & Project Lead",
+    dates: "Apr 2023 - Present",
+    bullets: [
+      "Parallelizing code to optimise programs for high-performance computing",
+      "Running HPC tasks on the M3 and NCI Gadi Supercomputers using Linux CLI and C",
+      "Benchmarking weather simulation models on supercomputer infrastructure",
+      "Using OpenBCI EEG headsets and machine learning to read and interpret brain waves",
     ],
   },
 ];
@@ -128,8 +133,8 @@ export const skillCategories: SkillCategory[] = [
       "JavaScript",
       "Python",
       "Go",
-      "Rust",
       "Java",
+      "C",
       "SQL",
     ],
   },
@@ -140,51 +145,43 @@ export const skillCategories: SkillCategory[] = [
       "Next.js",
       "Tailwind CSS",
       "HTML/CSS",
-      "Vue.js",
-      "Svelte",
     ],
   },
   {
     name: "Backend",
     skills: [
       "Node.js",
-      "Express",
-      "FastAPI",
-      "GraphQL",
+      "SpringBoot",
       "REST APIs",
-      "gRPC",
+      "PySpark",
     ],
   },
   {
-    name: "Infrastructure",
+    name: "Cloud & Infrastructure",
     skills: [
-      "AWS",
+      "AWS (Glue, Lambda, S3, CDK)",
+      "Azure App Services",
       "Docker",
-      "Kubernetes",
-      "Terraform",
-      "CI/CD",
+      "GitHub Actions",
+      "Coolify",
       "Linux",
     ],
   },
   {
-    name: "Databases",
+    name: "Data & Databases",
     skills: [
-      "PostgreSQL",
-      "MongoDB",
-      "Redis",
-      "SQLite",
-      "DynamoDB",
+      "MongoDB Atlas",
+      "PowerBI",
+      "SQL",
     ],
   },
   {
     name: "Tools",
     skills: [
       "Git",
-      "Vim",
+      "GitHub Actions",
+      "PowerShell",
       "VS Code",
-      "Figma",
-      "Jira",
-      "Notion",
     ],
   },
 ];
