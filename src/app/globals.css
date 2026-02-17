@@ -14,15 +14,15 @@ html,
 body {
   height: 100%;
   overflow: hidden;
-  background: #0f0f14;
-  color: #c0caf5;
+  background: #0d0d0d;
+  color: #e2e8f0;
   font-family: var(--font-mono), "JetBrains Mono", "Fira Code", "Cascadia Code",
     monospace;
 }
 
 ::selection {
-  background: #33467c;
-  color: #c0caf5;
+  background: #3a3530;
+  color: #e2e8f0;
 }
 
 ::-webkit-scrollbar {
@@ -34,12 +34,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #292e42;
+  background: #2a2a2a;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3b4261;
+  background: #3a3a3a;
 }
 
 /* ── Animations ─────────────────────────────────── */
@@ -90,8 +90,9 @@ body {
 }
 
 @keyframes bannerGlow {
-  0%, 100% {
-    opacity: 0.85;
+  0%,
+  100% {
+    opacity: 0.8;
   }
   50% {
     opacity: 1;
@@ -105,46 +106,46 @@ body {
 /* ── Output block card ──────────────────────────── */
 
 .output-block {
-  background: #16161e;
-  border: 1px solid #292e42;
+  background: #1a1a1a;
+  border: 1px solid #262626;
   border-radius: 8px;
-  padding: 12px 16px;
-  margin-top: 8px;
-  margin-bottom: 4px;
+  padding: 14px 18px;
+  margin-top: 10px;
+  margin-bottom: 6px;
 }
 
-/* ── Terminal color classes ──────────────────────── */
+/* ── Terminal color classes (Claude Code palette) ── */
 
 .text-terminal-green {
-  color: #9ece6a;
+  color: #7dce82;
 }
 
 .text-terminal-blue {
-  color: #7aa2f7;
+  color: #e5a855;
 }
 
 .text-terminal-cyan {
-  color: #7dcfff;
+  color: #5ebeab;
 }
 
 .text-terminal-red {
-  color: #f7768e;
+  color: #e5534b;
 }
 
 .text-terminal-yellow {
-  color: #e0af68;
+  color: #e5a855;
 }
 
 .text-terminal-magenta {
-  color: #bb9af7;
+  color: #da7756;
 }
 
 .text-terminal-gray {
-  color: #565f89;
+  color: #6b7280;
 }
 
 .text-terminal-white {
-  color: #c0caf5;
+  color: #e2e8f0;
 }
 
 .text-terminal-bright-white {
@@ -152,5 +153,25 @@ body {
 }
 
 .text-terminal-orange {
-  color: #ff9e64;
+  color: #da7756;
+}
+
+/* Warm gradient colors for ASCII banner */
+.text-gradient-1 {
+  color: #da7756;
+}
+.text-gradient-2 {
+  color: #d98050;
+}
+.text-gradient-3 {
+  color: #dc8d4a;
+}
+.text-gradient-4 {
+  color: #e09a44;
+}
+.text-gradient-5 {
+  color: #e5a855;
+}
+.text-gradient-6 {
+  color: #e5a855;
 }

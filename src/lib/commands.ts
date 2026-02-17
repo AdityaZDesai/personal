@@ -17,6 +17,7 @@ export interface CommandResult {
   newCwd?: string;
   clear?: boolean;
   isBlock?: boolean;
+  isError?: boolean;
 }
 
 type CommandHandler = (args: string[], cwd: string) => CommandResult;
@@ -90,10 +91,26 @@ function handleLs(args: string[], cwd: string): CommandResult {
     return { output: [{ text: "  (empty directory)", className: "text-terminal-gray" }] };
   }
 
-  const output: OutputLine[] = entries.map((entry) => ({
-    text: "  " + entry,
-    className: entry.endsWith("/") ? "text-terminal-blue font-bold" : "text-terminal-white",
-  }));
+  const maxLen = Math.max(...entries.map((e) => e.length));
+  const colWidth = maxLen + 4;
+  const cols = Math.max(1, Math.floor(60 / colWidth));
+
+  const output: OutputLine[] = [];
+  for (let i = 0; i < entries.length; i += cols) {
+    const row = entries.slice(i, i + cols);
+    const isDir = row.map((e) => e.endsWith("/"));
+    const text = "  " + row.map((e) => e.padEnd(colWidth)).join("");
+    const allDirs = isDir.every(Boolean);
+    const allFiles = isDir.every((d) => !d);
+    output.push({
+      text,
+      className: allDirs
+        ? "text-terminal-yellow font-bold"
+        : allFiles
+          ? "text-terminal-white"
+          : "text-terminal-white",
+    });
+  }
 
   return { output };
 }
@@ -348,6 +365,7 @@ export function executeCommand(input: string, cwd: string): CommandResult {
           className: "text-terminal-red",
         },
       ],
+      isError: true,
     };
   }
 

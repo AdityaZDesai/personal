@@ -8,7 +8,7 @@ interface OutputLineProps {
 export default function OutputLine({ text, className }: OutputLineProps) {
   return (
     <div
-      className={`whitespace-pre-wrap break-all leading-7 py-[1px] ${className || ""}`}
+      className={`whitespace-pre overflow-x-hidden leading-7 py-[2px] ${className || ""}`}
     >
       {text || "\u00A0"}
     </div>
