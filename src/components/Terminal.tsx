@@ -8,6 +8,7 @@ import {
   setCommandHistoryRef,
   getCommandNames,
   type OutputLine as OutputLineType,
+  type CommandResult,
 } from "@/lib/commands";
 import { getCompletions } from "@/lib/filesystem";
 
@@ -15,20 +16,52 @@ interface HistoryEntry {
   cwd: string;
   command: string;
   output: OutputLineType[];
+  isBlock?: boolean;
 }
 
 const ASCII_BANNER: OutputLineType[] = [
   { text: "" },
-  { text: "    ___       ___  __                ____                   _", className: "text-terminal-cyan" },
-  { text: "   /   | ____/ (_)/ /___  __ ____ _ / __ \\ ___   ___  ____ (_)", className: "text-terminal-cyan" },
-  { text: "  / /| |/ __  / // __/ / / / __  // / / // _ \\ / __// __  // /", className: "text-terminal-cyan" },
-  { text: " / ___ / /_/ / // /_ / /_/ / /_/ // /_/ //  __/(__  ) /_/ // /", className: "text-terminal-cyan" },
-  { text: "/_/  |_\\__,_/_/ \\__/ \\__, /\\__,_//_____/ \\___//____/\\__,_//_/", className: "text-terminal-cyan" },
-  { text: "                    /____/", className: "text-terminal-cyan" },
   { text: "" },
-  { text: "  Welcome to my interactive terminal portfolio.", className: "text-terminal-green" },
-  { text: "  Type 'help' to see available commands.", className: "text-terminal-gray" },
-  { text: "  Type 'ls' to start exploring.", className: "text-terminal-gray" },
+  {
+    text: "    ___       ___  __                ____                   _",
+    className: "text-terminal-cyan animate-banner-glow",
+  },
+  {
+    text: "   /   | ____/ (_)/ /___  __ ____ _ / __ \\ ___   ___  ____ (_)",
+    className: "text-terminal-cyan animate-banner-glow",
+  },
+  {
+    text: "  / /| |/ __  / // __/ / / / __  // / / // _ \\ / __// __  // /",
+    className: "text-terminal-cyan animate-banner-glow",
+  },
+  {
+    text: " / ___ / /_/ / // /_ / /_/ / /_/ // /_/ //  __/(__  ) /_/ // /",
+    className: "text-terminal-cyan animate-banner-glow",
+  },
+  {
+    text: "/_/  |_\\__,_/_/ \\__/ \\__, /\\__,_//_____/ \\___//____/\\__,_//_/",
+    className: "text-terminal-cyan animate-banner-glow",
+  },
+  {
+    text: "                    /____/",
+    className: "text-terminal-cyan animate-banner-glow",
+  },
+  { text: "" },
+  { text: "" },
+  {
+    text: "  Welcome to my interactive terminal portfolio.",
+    className: "text-terminal-green",
+  },
+  { text: "" },
+  {
+    text: "  Type 'help' to see available commands.",
+    className: "text-terminal-gray",
+  },
+  {
+    text: "  Type 'ls' to start exploring.",
+    className: "text-terminal-gray",
+  },
+  { text: "" },
   { text: "" },
 ];
 
@@ -46,7 +79,11 @@ export default function Terminal() {
 
   const scrollToBottom = useCallback(() => {
     if (terminalRef.current) {
-      terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+      requestAnimationFrame(() => {
+        if (terminalRef.current) {
+          terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+        }
+      });
     }
   }, []);
 
@@ -73,7 +110,7 @@ export default function Terminal() {
     }
 
     setCommandHistoryRef(newCommandHistory);
-    const result = executeCommand(input, cwd);
+    const result: CommandResult = executeCommand(input, cwd);
 
     if (result.clear) {
       setHistory([]);
@@ -84,6 +121,7 @@ export default function Terminal() {
       cwd,
       command: input,
       output: result.output,
+      isBlock: result.isBlock,
     };
 
     setHistory((prev) => [...prev, entry]);
@@ -110,7 +148,9 @@ export default function Terminal() {
 
     if (completions.length === 1) {
       parts[parts.length - 1] = completions[0];
-      setCurrentInput(parts.join(" ") + (completions[0].endsWith("/") ? "" : " "));
+      setCurrentInput(
+        parts.join(" ") + (completions[0].endsWith("/") ? "" : " ")
+      );
     } else if (completions.length > 1) {
       const commonPrefix = findCommonPrefix(completions);
       if (commonPrefix.length > partial.length) {
@@ -182,73 +222,100 @@ export default function Terminal() {
 
   return (
     <div
-      className="flex h-screen w-screen flex-col bg-[#1a1b26] text-sm"
+      className="flex h-screen w-screen items-center justify-center bg-[#0f0f14] p-0 sm:p-4"
       onClick={handleTerminalClick}
     >
-      {/* Title bar */}
-      <div className="flex h-8 flex-shrink-0 items-center bg-[#16161e] px-4">
-        <div className="flex gap-2 mr-4">
-          <div className="h-3 w-3 rounded-full bg-[#f7768e]" />
-          <div className="h-3 w-3 rounded-full bg-[#e0af68]" />
-          <div className="h-3 w-3 rounded-full bg-[#9ece6a]" />
-        </div>
-        <span className="text-xs text-terminal-gray">
-          visitor@aditya: {cwd}
-        </span>
-      </div>
-
-      {/* Terminal body */}
-      <div
-        ref={terminalRef}
-        className="flex-1 overflow-y-auto px-4 py-3 font-mono"
-      >
-        {/* Banner */}
-        {bannerLines.map((line, i) => (
-          <OutputLine key={`banner-${i}`} text={line.text} className={line.className} />
-        ))}
-
-        {/* Command history */}
-        {history.map((entry, i) => (
-          <div key={`entry-${i}`}>
-            <PromptLine cwd={entry.cwd} command={entry.command} />
-            {entry.output.map((line, j) => (
-              <OutputLine key={`output-${i}-${j}`} text={line.text} className={line.className} />
-            ))}
+      {/* Terminal container */}
+      <div className="flex h-full w-full flex-col overflow-hidden rounded-none border-0 border-[#292e42] bg-[#1a1b26] sm:h-[calc(100vh-32px)] sm:max-w-[1200px] sm:rounded-xl sm:border">
+        {/* Title bar */}
+        <div className="flex h-10 flex-shrink-0 items-center border-b border-[#292e42] bg-[#16161e] px-5 sm:rounded-t-xl">
+          <div className="mr-4 flex gap-2">
+            <div className="h-3 w-3 rounded-full bg-[#f7768e] transition-opacity hover:opacity-80" />
+            <div className="h-3 w-3 rounded-full bg-[#e0af68] transition-opacity hover:opacity-80" />
+            <div className="h-3 w-3 rounded-full bg-[#9ece6a] transition-opacity hover:opacity-80" />
           </div>
-        ))}
-
-        {/* Active prompt */}
-        <div className="flex leading-6">
-          <span className="text-terminal-green font-bold">visitor</span>
-          <span className="text-terminal-gray">@</span>
-          <span className="text-terminal-magenta font-bold">aditya</span>
-          <span className="text-terminal-gray">:</span>
-          <span className="text-terminal-blue font-bold">{cwd}</span>
-          <span className="text-terminal-white mr-2">$</span>
-          <span className="relative">
-            <span className="text-terminal-white">{currentInput}</span>
-            <span className="cursor-blink ml-[1px] inline-block h-[18px] w-[8px] translate-y-[2px] bg-[#c0caf5]" />
+          <span className="text-xs text-terminal-gray tracking-wide">
+            visitor@aditya: {cwd}
           </span>
         </div>
 
-        {/* Hidden input for capturing keystrokes */}
-        <input
-          ref={inputRef}
-          type="text"
-          className="absolute opacity-0 h-0 w-0"
-          value={currentInput}
-          onChange={(e) => setCurrentInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          autoFocus
-          autoCapitalize="off"
-          autoCorrect="off"
-          spellCheck={false}
-        />
-      </div>
+        {/* Scrollable output area */}
+        <div
+          ref={terminalRef}
+          className="flex-1 overflow-y-auto scroll-smooth px-5 py-5 sm:px-6 sm:py-6 font-mono text-sm"
+        >
+          {/* Banner */}
+          <div className="animate-fade-in">
+            {bannerLines.map((line, i) => (
+              <OutputLine
+                key={`banner-${i}`}
+                text={line.text}
+                className={line.className}
+              />
+            ))}
+          </div>
 
-      {/* Mobile hint */}
-      <div className="flex-shrink-0 bg-[#16161e] px-4 py-2 text-xs text-terminal-gray sm:hidden">
-        Tap anywhere to type. Best viewed on desktop.
+          {/* Command history */}
+          {history.map((entry, i) => (
+            <div key={`entry-${i}`} className="mb-5 animate-fade-in">
+              <PromptLine cwd={entry.cwd} command={entry.command} />
+              {entry.output.length > 0 && (
+                entry.isBlock ? (
+                  <div className="output-block mt-2">
+                    {entry.output.map((line, j) => (
+                      <OutputLine
+                        key={`output-${i}-${j}`}
+                        text={line.text}
+                        className={line.className}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="mt-1">
+                    {entry.output.map((line, j) => (
+                      <OutputLine
+                        key={`output-${i}-${j}`}
+                        text={line.text}
+                        className={line.className}
+                      />
+                    ))}
+                  </div>
+                )
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Fixed bottom input bar */}
+        <div className="animate-slide-up flex-shrink-0 border-t border-[#292e42] bg-[#16161e] px-5 py-3 sm:rounded-b-xl sm:px-6">
+          <div className="flex items-center gap-3 rounded-lg bg-[#1a1b26] px-4 py-2.5 ring-1 ring-[#292e42] transition-all duration-200 focus-within:ring-[#7aa2f7]/50">
+            <span className="text-terminal-blue font-bold text-base select-none">&gt;</span>
+            <div className="relative flex-1">
+              <span className="text-terminal-white text-sm leading-7">{currentInput}</span>
+              <span className="cursor-blink ml-[1px] inline-block h-[18px] w-[8px] translate-y-[3px] bg-[#c0caf5]" />
+              <input
+                ref={inputRef}
+                type="text"
+                className="absolute inset-0 h-full w-full opacity-0"
+                value={currentInput}
+                onChange={(e) => setCurrentInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                autoFocus
+                autoCapitalize="off"
+                autoCorrect="off"
+                spellCheck={false}
+              />
+            </div>
+            <span className="hidden text-xs text-terminal-gray sm:block select-none">
+              {cwd}
+            </span>
+          </div>
+        </div>
+
+        {/* Mobile hint */}
+        <div className="flex-shrink-0 bg-[#16161e] px-5 py-2 text-xs text-terminal-gray sm:hidden">
+          Tap anywhere to type. Best viewed on desktop.
+        </div>
       </div>
     </div>
   );

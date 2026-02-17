@@ -16,6 +16,7 @@ export interface CommandResult {
   output: OutputLine[];
   newCwd?: string;
   clear?: boolean;
+  isBlock?: boolean;
 }
 
 type CommandHandler = (args: string[], cwd: string) => CommandResult;
@@ -61,7 +62,7 @@ function handleHelp(): CommandResult {
     { text: "  Try: ls, then cd projects, then cat terminal-portfolio.txt", className: "text-terminal-gray" },
     { text: "" },
   ];
-  return { output };
+  return { output, isBlock: true };
 }
 
 function handleLs(args: string[], cwd: string): CommandResult {
@@ -196,7 +197,7 @@ function handleCat(args: string[], cwd: string): CommandResult {
     return { text: line };
   });
 
-  return { output };
+  return { output, isBlock: true };
 }
 
 function handlePwd(_args: string[], cwd: string): CommandResult {
@@ -253,7 +254,7 @@ function handleTree(args: string[], cwd: string): CommandResult {
     return { text: "  " + line };
   });
 
-  return { output };
+  return { output, isBlock: true };
 }
 
 function handleOpen(args: string[]): CommandResult {
@@ -271,7 +272,7 @@ function handleOpen(args: string[]): CommandResult {
       });
     }
     output.push({ text: "" });
-    return { output };
+    return { output, isBlock: true };
   }
 
   const name = args[0].toLowerCase();
