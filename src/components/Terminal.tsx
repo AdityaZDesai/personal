@@ -294,11 +294,11 @@ export default function Terminal() {
 
   return (
     <div
-      className="flex h-screen w-screen items-center justify-center bg-[#0d0d0d] p-0 sm:p-4"
+      className="flex h-[100dvh] w-screen items-center justify-center bg-[#0d0d0d] p-0 sm:p-4"
       onClick={handleTerminalClick}
     >
       {/* Terminal container */}
-      <div className="flex h-full w-full flex-col overflow-hidden rounded-none border-0 border-[#262626] bg-[#141414] sm:h-[calc(100vh-32px)] sm:max-w-[1200px] sm:rounded-xl sm:border">
+      <div className="flex h-full w-full flex-col overflow-hidden rounded-none border-0 border-[#262626] bg-[#141414] sm:h-[calc(100dvh-32px)] sm:max-w-[1200px] sm:rounded-xl sm:border">
         {/* Title bar */}
         <div className="flex h-9 sm:h-10 flex-shrink-0 items-center justify-between border-b border-[#262626] bg-[#0d0d0d] px-3 sm:px-5 sm:rounded-t-xl">
           <div className="flex items-center min-w-0">
