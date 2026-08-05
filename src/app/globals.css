@@ -103,6 +103,17 @@ body {
   animation: bannerGlow 3s ease-in-out infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* ── ASCII banner (hide scrollbar but allow overflow as fallback) ── */
 
 .ascii-banner {
@@ -157,7 +168,7 @@ body {
 }
 
 .text-terminal-gray {
-  color: #6b7280;
+  color: #9ca3af;
 }
 
 .text-terminal-white {
@@ -170,6 +181,185 @@ body {
 
 .text-terminal-orange {
   color: #da7756;
+}
+
+/* Interactive terminal controls */
+
+.quick-action,
+.run-command {
+  min-height: 42px;
+  border: 1px solid #3a3530;
+  border-radius: 7px;
+  background: #1a1a1a;
+  color: #e2e8f0;
+  font: inherit;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.quick-action {
+  padding: 7px 11px;
+  color: #e5a855;
+}
+
+.quick-action:hover,
+.run-command:hover {
+  border-color: #da7756;
+  background: #211b19;
+  color: #ffffff;
+}
+
+.run-command {
+  min-width: 58px;
+  padding: 6px 12px;
+  color: #7dce82;
+  font-weight: 700;
+}
+
+.sound-toggle {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.sound-toggle:focus-visible {
+  outline-offset: -3px;
+}
+
+.terminal-input {
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.terminal-input::placeholder {
+  color: #9ca3af;
+  opacity: 0.8;
+}
+
+.output-action {
+  width: fit-content;
+  max-width: 100%;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.output-action.text-terminal-yellow {
+  color: #e5a855;
+}
+
+.output-action.text-terminal-white {
+  color: #e2e8f0;
+}
+
+.output-action.text-terminal-gray {
+  color: #9ca3af;
+}
+
+.output-action:hover {
+  background: #26211f;
+  color: #ffffff;
+  text-decoration: underline;
+  text-decoration-color: #da7756;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 639px) {
+  .terminal-page {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .terminal-output {
+    overscroll-behavior: contain;
+    padding: 14px 12px 18px;
+    font-size: 13px;
+  }
+
+  .terminal-intro {
+    padding-top: 4px;
+    padding-left: 0;
+  }
+
+  .ascii-banner {
+    margin-bottom: 20px;
+    font-size: clamp(12px, 4vw, 14px);
+  }
+
+  .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    margin-bottom: 24px;
+  }
+
+  .quick-action {
+    width: 100%;
+    min-height: 44px;
+    padding: 8px 10px;
+    text-align: left;
+    touch-action: manipulation;
+  }
+
+  .quick-action:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .output-action {
+    display: flex;
+    min-height: 44px;
+    width: 100%;
+    align-items: center;
+    padding: 6px 4px;
+    touch-action: manipulation;
+  }
+
+  .terminal-command-bar {
+    padding: 8px 10px;
+  }
+
+  .terminal-command-form {
+    padding: 6px 8px;
+  }
+
+  .run-command {
+    min-height: 44px;
+    min-width: 56px;
+    padding-right: 10px;
+    padding-left: 10px;
+    touch-action: manipulation;
+  }
+
+  .mobile-hint {
+    padding-right: 10px;
+    padding-bottom: 6px;
+    padding-left: 10px;
+  }
+}
+
+.quick-action:focus-visible,
+.run-command:focus-visible,
+.sound-toggle:focus-visible,
+.output-action:focus-visible,
+.output-line a:focus-visible,
+.terminal-input:focus-visible {
+  outline: 2px solid #e5a855;
+  outline-offset: 2px;
+}
+
+@media (min-width: 640px) {
+  .terminal-input {
+    font-size: 14px;
+  }
 }
 
 /* Warm gradient colors for ASCII banner */

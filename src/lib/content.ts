@@ -33,19 +33,29 @@ export const aboutText = `
   with a passion for building full-stack products and working with data at scale.
 
   Currently an Assistant Data Engineer at ENGIE and a Projects Officer at
-  the Monash Association of Coding, where I built a jobs board with 2,200+
-  daily active users.
+  the Monash Association of Coding, where I built a jobs board used by the
+  Monash student community.
 
   I love shipping real products — from AI companions to hackathon-winning
   fashion apps. Always looking for the next problem to solve.
 
-  Feel free to explore this terminal to learn more about me.
-  Type 'help' to see what commands are available.
+  Use the quick actions or terminal commands to learn more about me.
 
   Contact:
     Email    adityadesai753@gmail.com
-    GitHub   github.com/adityaZdesai
-    LinkedIn linkedin.com/in/adityadesai
+    GitHub   https://github.com/AdityaZDesai
+    LinkedIn https://www.linkedin.com/in/adityazdesai
+`;
+
+export const educationText = `
+  Education
+  ─────────
+
+  Monash University
+  Computer Science & Business Analytics
+
+  Combining software engineering, data, and business problem-solving to
+  build products that are useful in the real world.
 `;
 
 export const projects: Project[] = [
@@ -61,7 +71,7 @@ export const projects: Project[] = [
     name: "MAC Jobs Board",
     slug: "mac-jobs-board",
     description:
-      "A jobs board built for the Monash Association of Coding community. Reached 1,000 daily active users at its peak, connecting students with tech opportunities.",
+      "A jobs board built for the Monash Association of Coding community, connecting students with technology opportunities.",
     tech: ["Next.js", "TypeScript", "Tailwind CSS"],
     url: "https://jobs.monashcoding.com",
   },
@@ -93,7 +103,7 @@ export const experiences: Experience[] = [
     role: "Projects Officer",
     dates: "Nov 2024 - Present",
     bullets: [
-      "Built a jobs board using Next.js and Go with over 2,200 daily active users, hosted on Azure App Services",
+      "Built a jobs board using Next.js and Go for the Monash student community, hosted on Azure App Services",
       "Used GoLang to scrape over 10,000 job listings from 4 different websites",
       "Built APIs and backends using SpringBoot and Java",
       "Created an open source project with 100+ commits, using GitHub Actions for CI/CD auto-deployment",
@@ -195,43 +205,20 @@ export const hobbiesText = `
     Gaming        Playing games whenever I get the chance.
 `;
 
-export const beliefsText = `
-  Things I believe in:
-
-    AGI by 2030           We're closer than people think. The singularity isn't sci-fi anymore.
-    Engineers should rule  Society would be better off run by builders than politicians.
-    Sleep is a bug         The best work happens when everyone else is asleep.
-    College is a scam      I'm in uni and I learn more in a weekend hackathon than a semester.
-    Meritocracy or death   If your idea can't survive criticism, it deserves to die.
-    AI replaces managers   Middle management is just a slow API. Automate it.
-    Ship at 2am            Your best code is written when you have no business being awake.
-    Comfort is the enemy   Growth only happens when you're uncomfortable and slightly unhinged.
-`;
-
 export const links: Link[] = [
   {
     name: "github",
-    url: "https://github.com/adityadesai",
-    label: "GitHub - github.com/adityadesai",
+    url: "https://github.com/AdityaZDesai",
+    label: "GitHub - github.com/AdityaZDesai",
   },
   {
     name: "linkedin",
-    url: "https://linkedin.com/in/adityadesai",
-    label: "LinkedIn - linkedin.com/in/adityadesai",
+    url: "https://www.linkedin.com/in/adityazdesai",
+    label: "LinkedIn - linkedin.com/in/adityazdesai",
   },
   {
     name: "email",
-    url: "mailto:aditya@example.com",
-    label: "Email - aditya@example.com",
-  },
-  {
-    name: "website",
-    url: "https://adityadesai.dev",
-    label: "Website - adityadesai.dev",
-  },
-  {
-    name: "twitter",
-    url: "https://twitter.com/adityadesai",
-    label: "Twitter/X - twitter.com/adityadesai",
+    url: "mailto:adityadesai753@gmail.com",
+    label: "Email - adityadesai753@gmail.com",
   },
 ];

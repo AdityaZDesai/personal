@@ -8,9 +8,39 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aditya Desai | Terminal Portfolio",
+  title: {
+    default: "Aditya Desai | Software Engineer & Data Engineer",
+    template: "%s | Aditya Desai",
+  },
   description:
-    "Interactive terminal-style portfolio. Type commands to explore.",
+    "Explore Aditya Desai's software engineering, data engineering, and full-stack projects through an accessible interactive terminal portfolio.",
+  authors: [{ name: "Aditya Desai" }],
+  creator: "Aditya Desai",
+  keywords: [
+    "Aditya Desai",
+    "software engineer",
+    "data engineer",
+    "full-stack developer",
+    "Monash University",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "en_AU",
+    title: "Aditya Desai | Software Engineer & Data Engineer",
+    description:
+      "Software engineering, data engineering, and full-stack projects in an accessible interactive terminal portfolio.",
+    siteName: "Aditya Desai Portfolio",
+  },
+  twitter: {
+    card: "summary",
+    title: "Aditya Desai | Software Engineer & Data Engineer",
+    description:
+      "Software engineering, data engineering, and full-stack projects.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

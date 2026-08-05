@@ -10,6 +10,9 @@ import { links } from "./content";
 export interface OutputLine {
   text: string;
   className?: string;
+  command?: string;
+  href?: string;
+  actionLabel?: string;
 }
 
 export interface CommandResult {
@@ -41,16 +44,16 @@ function handleHelp(): CommandResult {
     { text: "" },
     { text: " Available Commands:", className: "text-terminal-green font-bold" },
     { text: "" },
-    { text: "  help         Show this help message" },
-    { text: "  ls [dir]     List directory contents" },
+    { text: "  help         Show this help message", command: "help" },
+    { text: "  ls [dir]     List directory contents", command: "ls" },
     { text: "  cd <dir>     Change directory" },
     { text: "  cat <file>   Display file contents" },
-    { text: "  pwd          Print working directory" },
-    { text: "  tree [dir]   Show directory tree" },
-    { text: "  whoami       About the visitor" },
-    { text: "  open <name>  Open a link (github, linkedin, etc.)" },
-    { text: "  history      Show command history" },
-    { text: "  clear        Clear the terminal" },
+    { text: "  pwd          Print working directory", command: "pwd" },
+    { text: "  tree [dir]   Show directory tree", command: "tree" },
+    { text: "  whoami       About the visitor", command: "whoami" },
+    { text: "  open <name>  Open a contact link", command: "open" },
+    { text: "  history      Show command history", command: "history" },
+    { text: "  clear        Clear the terminal", command: "clear" },
     { text: "  echo <text>  Print text" },
     { text: "" },
     { text: " Navigation Tips:", className: "text-terminal-yellow font-bold" },
@@ -60,7 +63,11 @@ function handleHelp(): CommandResult {
     { text: "  cd ..        Go up one directory" },
     { text: "  cd ~         Go to home directory" },
     { text: "" },
-    { text: " Try: ls, then cd projects, then cat terminal-portfolio.txt", className: "text-terminal-gray" },
+    {
+      text: " Try: cat projects/harmonica.txt",
+      className: "text-terminal-gray",
+      command: "cat projects/harmonica.txt",
+    },
     { text: "" },
   ];
   return { output, isBlock: true };
@@ -79,38 +86,41 @@ function handleLs(args: string[], cwd: string): CommandResult {
           className: "text-terminal-red",
         },
       ],
+      isError: true,
     };
   }
 
   if (node.type === "file") {
-    return { output: [{ text: node.name }] };
+    return {
+      output: [
+        {
+          text: `  ${node.name}`,
+          command: `cat ${resolved}`,
+          actionLabel: `Read ${node.name}`,
+        },
+      ],
+    };
   }
 
   const entries = listDirectory(node);
-  if (entries.length === 0) {
+  if (entries.length === 0 || !node.children) {
     return { output: [{ text: "  (empty directory)", className: "text-terminal-gray" }] };
   }
 
-  const maxLen = Math.max(...entries.map((e) => e.length));
-  const colWidth = maxLen + 2;
-  const cols = Math.max(1, Math.floor(40 / colWidth));
-
-  const output: OutputLine[] = [];
-  for (let i = 0; i < entries.length; i += cols) {
-    const row = entries.slice(i, i + cols);
-    const isDir = row.map((e) => e.endsWith("/"));
-    const text = "  " + row.map((e) => e.padEnd(colWidth)).join("");
-    const allDirs = isDir.every(Boolean);
-    const allFiles = isDir.every((d) => !d);
-    output.push({
-      text,
-      className: allDirs
+  const output: OutputLine[] = node.children.map((entry) => {
+    const entryPath = resolved === "~" ? `~/${entry.name}` : `${resolved}/${entry.name}`;
+    const isDirectory = entry.type === "directory";
+    return {
+      text: `  ${entry.name}${isDirectory ? "/" : ""}`,
+      className: isDirectory
         ? "text-terminal-yellow font-bold"
-        : allFiles
-          ? "text-terminal-white"
-          : "text-terminal-white",
-    });
-  }
+        : "text-terminal-white",
+      command: isDirectory ? `ls ${entryPath}` : `cat ${entryPath}`,
+      actionLabel: isDirectory
+        ? `Explore ${entry.name}`
+        : `Read ${entry.name}`,
+    };
+  });
 
   return { output };
 }
@@ -131,6 +141,7 @@ function handleCd(args: string[], cwd: string): CommandResult {
           className: "text-terminal-red",
         },
       ],
+      isError: true,
     };
   }
 
@@ -142,6 +153,7 @@ function handleCd(args: string[], cwd: string): CommandResult {
           className: "text-terminal-red",
         },
       ],
+      isError: true,
     };
   }
 
@@ -154,6 +166,7 @@ function handleCat(args: string[], cwd: string): CommandResult {
       output: [
         { text: "cat: missing file operand", className: "text-terminal-red" },
       ],
+      isError: true,
     };
   }
 
@@ -168,6 +181,7 @@ function handleCat(args: string[], cwd: string): CommandResult {
           className: "text-terminal-red",
         },
       ],
+      isError: true,
     };
   }
 
@@ -179,6 +193,7 @@ function handleCat(args: string[], cwd: string): CommandResult {
           className: "text-terminal-red",
         },
       ],
+      isError: true,
     };
   }
 
@@ -256,6 +271,7 @@ function handleTree(args: string[], cwd: string): CommandResult {
           className: "text-terminal-red",
         },
       ],
+      isError: true,
     };
   }
 
@@ -286,6 +302,8 @@ function handleOpen(args: string[]): CommandResult {
     for (const link of links) {
       output.push({
         text: `    ${link.name.padEnd(12)} ${link.label}`,
+        href: link.url,
+        actionLabel: `Open ${link.label}`,
       });
     }
     output.push({ text: "" });
@@ -303,11 +321,16 @@ function handleOpen(args: string[]): CommandResult {
           className: "text-terminal-red",
         },
       ],
+      isError: true,
     };
   }
 
   if (typeof window !== "undefined") {
-    window.open(link.url, "_blank");
+    if (link.url.startsWith("mailto:")) {
+      window.location.href = link.url;
+    } else {
+      window.open(link.url, "_blank", "noopener,noreferrer");
+    }
   }
 
   return {
@@ -315,6 +338,8 @@ function handleOpen(args: string[]): CommandResult {
       {
         text: `  Opening ${link.label}...`,
         className: "text-terminal-cyan",
+        href: link.url,
+        actionLabel: `Open ${link.label}`,
       },
     ],
   };

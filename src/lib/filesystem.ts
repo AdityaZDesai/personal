@@ -4,7 +4,7 @@ import {
   experiences,
   skillCategories,
   hobbiesText,
-  beliefsText,
+  educationText,
   links,
   type Project,
   type Experience,
@@ -58,11 +58,11 @@ function formatSkills(): string[] {
 function formatLinks(): string[] {
   const lines: string[] = [];
   lines.push("");
-  lines.push("  Available links (use 'open <name>' to visit):");
+  lines.push("  Contact:");
   lines.push("");
   for (const link of links) {
     const padded = link.name.padEnd(12);
-    lines.push(`    ${padded}${link.label}`);
+    lines.push(`    ${padded}${link.url.replace(/^mailto:/, "")}`);
   }
   lines.push("");
   return lines;
@@ -80,7 +80,7 @@ function buildFileSystem(): FSNode {
       {
         name: "about.txt",
         type: "file",
-        content: [...textToLines(aboutText), ...formatLinks()],
+        content: textToLines(aboutText),
       },
       {
         name: "projects",
@@ -106,14 +106,19 @@ function buildFileSystem(): FSNode {
         content: formatSkills(),
       },
       {
+        name: "education.txt",
+        type: "file",
+        content: textToLines(educationText),
+      },
+      {
+        name: "contact.txt",
+        type: "file",
+        content: formatLinks(),
+      },
+      {
         name: "hobbies.txt",
         type: "file",
         content: textToLines(hobbiesText),
-      },
-      {
-        name: "beliefs.txt",
-        type: "file",
-        content: textToLines(beliefsText),
       },
     ],
   };

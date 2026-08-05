@@ -5,7 +5,12 @@ let ambientRunning = false;
 let muted = false;
 
 export function initAudio(): boolean {
-  if (audioCtx) return true;
+  if (audioCtx) {
+    if (audioCtx.state === "suspended") {
+      void audioCtx.resume();
+    }
+    return true;
+  }
   try {
     audioCtx = new AudioContext();
     masterGain = audioCtx.createGain();
@@ -104,12 +109,14 @@ export function playError() {
 }
 
 export function startAmbient() {
-  if (ambientRunning) return;
+  if (muted || ambientRunning) return;
   ambientRunning = true;
 
-  ambientAudio = new Audio("/lofi-ambient.mp3");
+  if (!ambientAudio) {
+    ambientAudio = new Audio("/lofi-ambient.mp3");
+  }
   ambientAudio.loop = true;
-  ambientAudio.volume = muted ? 0 : 0.35;
+  ambientAudio.volume = 0.35;
   ambientAudio.play().catch(() => {
     ambientRunning = false;
   });
@@ -118,23 +125,8 @@ export function startAmbient() {
 export function stopAmbient() {
   if (!ambientAudio) return;
   ambientRunning = false;
-
-  const audio = ambientAudio;
-  const startVol = audio.volume;
-  const fadeSteps = 20;
-  const fadeInterval = 50;
-  let step = 0;
-
-  const fade = setInterval(() => {
-    step++;
-    audio.volume = Math.max(0, startVol * (1 - step / fadeSteps));
-    if (step >= fadeSteps) {
-      clearInterval(fade);
-      audio.pause();
-      audio.currentTime = 0;
-      ambientAudio = null;
-    }
-  }, fadeInterval);
+  ambientAudio.pause();
+  ambientAudio.currentTime = 0;
 }
 
 export function setMuted(value: boolean) {
@@ -145,24 +137,8 @@ export function setMuted(value: boolean) {
   if (ambientAudio) {
     ambientAudio.volume = muted ? 0 : 0.35;
   }
-  try {
-    localStorage.setItem("terminal-muted", String(muted));
-  } catch {
-    /* ignore */
-  }
 }
 
-export function isMuted(): boolean {
+export function getMutedState(): boolean {
   return muted;
-}
-
-export function loadMutedState() {
-  try {
-    const stored = localStorage.getItem("terminal-muted");
-    if (stored === "true") {
-      muted = true;
-    }
-  } catch {
-    /* ignore */
-  }
 }

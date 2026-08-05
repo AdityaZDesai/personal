@@ -20,7 +20,7 @@ export default function PromptLine({ cwd, command }: PromptLineProps) {
         <span className="text-terminal-yellow font-bold">
           {formatCwd(cwd)}
         </span>
-        <span className="text-terminal-white">{"$ "}</span>
+        <span className="mr-2 text-terminal-white">$</span>
       </span>
       <span className="text-terminal-white break-all">{command}</span>
     </div>
